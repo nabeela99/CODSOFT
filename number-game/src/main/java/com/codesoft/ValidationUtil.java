@@ -1,4 +1,4 @@
-package com.nabeela;
+package com.codesoft;
 
 public class ValidationUtil {
     public static void check(String number,int n) throws IllegalAccessException {

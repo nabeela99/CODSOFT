@@ -1,4 +1,4 @@
-package com.nabeela;
+package com.codesoft;
 
 public class GameFeedback {
 

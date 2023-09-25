@@ -1,4 +1,4 @@
-package com.nabeela;
+package com.codesoft;
 
 import java.util.Random;
 import java.util.Scanner;
