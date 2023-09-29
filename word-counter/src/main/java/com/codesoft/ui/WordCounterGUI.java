@@ -23,6 +23,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 
 import static com.codesoft.util.Constants.FILE_ICON;
 import static com.codesoft.util.Constants.TEXT_ICON;
@@ -174,12 +178,25 @@ public class WordCounterGUI extends JPanel implements ActionListener {
 
         if (e.getSource() == this.textWordCountButton) {
             var textData = this.textInputTextArea.getText();
-            this.textOutput.append(Counter.getCountedWordsForDisplay(textData) + "\n\n");
+            if (!this.textOutput.getText().isEmpty()) {
+                this.textOutput.append("\n\n");
+            }
+
+            this.textOutput.append(String.format("Output at: %s\n",
+                    LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+                            .localizedBy(Locale.UK))));
+            this.textOutput.append(Counter.getCountedWordsForDisplay(textData));
         }
 
         if (e.getSource() == this.fileWordCountButton) {
             var textData = this.fileTextArea.getText();
-            this.fileOutput.append(Counter.getCountedWordsForDisplay(textData) + "\n\n");
+            if (!this.fileOutput.getText().isEmpty()) {
+                this.fileOutput.append("\n\n");
+            }
+            this.fileOutput.append(String.format("Output at: %s\n",
+                    LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+                            .localizedBy(Locale.UK))));
+            this.fileOutput.append(Counter.getCountedWordsForDisplay(textData));
         }
     }
 }
