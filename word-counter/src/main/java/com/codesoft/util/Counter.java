@@ -19,8 +19,8 @@ public class Counter {
             for (String word : words) {
                 if (word.trim().isEmpty()) continue;
                 map.put(word, map.getOrDefault(word, 0) + 1);
+                totalWords = totalWords + 1;
             }
-            totalWords += words.length;
         }
         int uniqueWords = map.size();
         var wordCountResult = new LinkedHashMap<String, Integer>();

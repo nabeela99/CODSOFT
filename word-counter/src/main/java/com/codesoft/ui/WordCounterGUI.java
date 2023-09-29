@@ -92,7 +92,6 @@ public class WordCounterGUI extends JPanel implements ActionListener {
             outputScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
             panel.add(outputScroll);
 
-
         } else {
             this.fileChooser = new JFileChooser();
             this.openButton = new JButton("Open a File...");
@@ -163,6 +162,7 @@ public class WordCounterGUI extends JPanel implements ActionListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = this.fileChooser.getSelectedFile();
                 try {
+                    this.fileTextArea.setText("");
                     this.fileTextArea.append(Files.readString(Path.of(file.getPath())));
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -174,12 +174,12 @@ public class WordCounterGUI extends JPanel implements ActionListener {
 
         if (e.getSource() == this.textWordCountButton) {
             var textData = this.textInputTextArea.getText();
-            this.textOutput.append(Counter.getCountedWordsForDisplay(textData));
+            this.textOutput.append(Counter.getCountedWordsForDisplay(textData) + "\n\n");
         }
 
         if (e.getSource() == this.fileWordCountButton) {
             var textData = this.fileTextArea.getText();
-            this.fileOutput.append(Counter.getCountedWordsForDisplay(textData));
+            this.fileOutput.append(Counter.getCountedWordsForDisplay(textData) + "\n\n");
         }
     }
 }
