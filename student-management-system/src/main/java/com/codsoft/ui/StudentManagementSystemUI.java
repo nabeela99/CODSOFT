@@ -38,6 +38,8 @@ public class StudentManagementSystemUI extends JPanel
     private final JTextField nameField;
     private final JTextField rollNoField;
     private final JTextField gradeField;
+
+    private JTextField filterTextField;
     protected static final String textFieldName = "Name";
     protected static final String textFieldRollNo = "Roll No";
     protected static final String textFieldGrade = "Grade";
@@ -116,6 +118,8 @@ public class StudentManagementSystemUI extends JPanel
         paneScrollPane.setPreferredSize(new Dimension(600, 400));
         paneScrollPane.setMinimumSize(new Dimension(50, 60));
 
+        this.filterTextField = new JTextField();
+        this.filterTextField.setVisible(true);
         JPanel rightPane = new JPanel();
         rightPane.add(paneScrollPane);
 
@@ -223,6 +227,8 @@ public class StudentManagementSystemUI extends JPanel
                        name, rollNo, grade))) {
                    JOptionPane.showMessageDialog(frame, "Student Details Added.");
                    this.clearInputFields();
+               } else {
+                   JOptionPane.showMessageDialog(frame, "Failed to Save. Roll No Already assigned to Other Student");
                }
             }
             if(storageUtil.persist()) {
@@ -276,7 +282,7 @@ public class StudentManagementSystemUI extends JPanel
                 return false;
             }
         };
-        this.setEnabled(true);
+        this.studentList.setEnabled(true);
     }
 
     protected void reloadTable() {
