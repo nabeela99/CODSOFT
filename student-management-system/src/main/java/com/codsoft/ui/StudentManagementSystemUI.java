@@ -203,21 +203,10 @@ public class StudentManagementSystemUI extends JPanel
                                 JOptionPane.showMessageDialog(frame
                                         , String.format("Roll no already assigned to %s, with student Id %s"
                                                 , student.getName(), student.getId()));
+                            } else {
+                                this.updateStudentAndPersist();
                             }
-                }, () -> {
-                    storageUtil.getStudentById(editId).ifPresentOrElse(student -> {
-                                student.setName(this.nameField.getText());
-                                student.setRollNo(this.rollNoField.getText());
-                                student.setGrade(this.gradeField.getText());
-                            }, () -> JOptionPane.showMessageDialog(frame
-                                    , "Student details not present."));
-                    if(storageUtil.persist()) {
-                        this.actionStatus.setText("Data Updated...");
-                    }
-                    this.clearInputFields();
-                });
-
-                this.editId = -1;
+                }, this::updateStudentAndPersist);
             } else {
                 int lastId = 0;
                 if (!storageUtil.dataList.isEmpty()) {
@@ -273,6 +262,24 @@ public class StudentManagementSystemUI extends JPanel
                 }
             }
         }
+    }
+
+    private void updateStudentAndPersist() {
+        storageUtil.getStudentById(editId).ifPresentOrElse(student -> {
+            student.setName(this.nameField.getText());
+            student.setRollNo(this.rollNoField.getText());
+            student.setGrade(this.gradeField.getText());
+            if (storageUtil.persist()) {
+                this.actionStatus.setText("Data Updated...");
+            }
+            this.editId = -1;
+            this.clearInputFields();
+        }, () -> {
+            JOptionPane.showMessageDialog(frame
+                    , "Student details not present.");
+            this.editId = -1;
+            this.clearInputFields();
+        });
     }
 
     protected void makeList() {
